@@ -1,17 +1,19 @@
 package t3b.pv.com.org.EnvioAutomatico.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import t3b.pv.com.org.EnvioAutomatico.frame.FEnvioTurnos;
 
 public class HiloTiempo extends Thread {
 
 	private int minutos = 0, segundos = 0, minutos_totales = 0, tiempo_espera = 10;
-	private FEnvioTurnos frame;
+
+	@Autowired
+	@Qualifier("frameEnvioTurnos")
+	FEnvioTurnos frameEnvioTurnos;
 
 	public HiloTiempo() {
-	}
-
-	public HiloTiempo(FEnvioTurnos frame) {
-		this.frame = frame;
 	}
 
 	public void ejecutar() {
@@ -39,12 +41,12 @@ public class HiloTiempo extends Thread {
 					segundost = String.valueOf(segundos);
 				}
 
-				frame.getlTiempo().setText("Tiempo  " + minutost + ":" + segundost);
+				frameEnvioTurnos.getlTiempo().setText("Tiempo  " + minutost + ":" + segundost);
 
 				Thread.sleep(1000);
 
 				if (minutos_totales >= tiempo_espera) {
-					frame.muestraMensajeTiempoExcedido();
+					frameEnvioTurnos.muestraMensajeTiempoExcedido();
 					minutos_totales = 0;
 				}
 
@@ -72,14 +74,6 @@ public class HiloTiempo extends Thread {
 
 	public void setSegundos(int segundos) {
 		this.segundos = segundos;
-	}
-
-	public FEnvioTurnos getFrame() {
-		return frame;
-	}
-
-	public void setFrame(FEnvioTurnos frame) {
-		this.frame = frame;
 	}
 
 	public int getMinutos_totales() {

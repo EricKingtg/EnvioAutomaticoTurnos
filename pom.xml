@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>t3b.pv.com.org</groupId>
 	<artifactId>EnvioAutomatico</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>EnvioAutomatico</name>
 	<description>Proyecto Swing para el envío automático de los turnos</description>
 
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>t3b.pv.cierraturno</groupId>
 			<artifactId>BashCierraTurno</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>

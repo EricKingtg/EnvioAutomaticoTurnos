@@ -1,7 +1,6 @@
 package t3b.pv.com.org.EnvioAutomatico.frame;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,23 +8,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import t3b.pv.cierraturno.service.DatosService;
 import t3b.pv.com.org.EnvioAutomatico.utils.HiloEjecucion;
 import t3b.pv.com.org.EnvioAutomatico.utils.HiloTiempo;
-
 
 @Service("frameEnvioTurnos")
 public class FEnvioTurnos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
-	@Autowired
-	@Qualifier("datosServiceImpl")
-	private DatosService inicio;
 
 	public FEnvioTurnos() {
 		initComponents();
@@ -48,18 +39,12 @@ public class FEnvioTurnos extends JFrame {
 
 	public void iniciaProceso() {
 
-		Date objDate = new Date(); // Sistema actual La fecha y la hora se asignan a objDate
+		LocalDate date = LocalDate.now();
+		System.out.println(date);
 
-		System.out.println(objDate);
-		String strDateFormat = "yyyy-MM-dd"; // El formato de fecha está especificado
-		SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat); // La cadena de formato de fecha se pasa como un
-																		// argumento al objeto
-		System.out.println(objSDF.format(objDate)); // El formato de fech
+		this.getlFecha().setText("Fecha: " + date);
 
-		this.getlFecha().setText("Fecha: " + objSDF.format(objDate));
-
-		HiloTiempo hiloTiempo = new HiloTiempo(this);
-		// hiloTiempo.start();
+		HiloTiempo hiloTiempo = new HiloTiempo();
 		HiloEjecucion hiloEjecucion = new HiloEjecucion(this, hiloTiempo);
 		hiloEjecucion.start();
 

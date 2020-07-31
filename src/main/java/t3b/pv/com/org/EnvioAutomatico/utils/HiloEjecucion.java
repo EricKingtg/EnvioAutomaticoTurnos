@@ -9,11 +9,12 @@ import t3b.pv.cierraturno.dto.TurnoDto;
 import t3b.pv.cierraturno.service.DatosService;
 import t3b.pv.com.org.EnvioAutomatico.frame.FEnvioTurnos;
 
+
 public class HiloEjecucion extends Thread {
 
 	@Autowired
 	@Qualifier("datosServiceImpl")
-	private DatosService cierra;
+	private DatosService datosServiceImpl;
 
 	private FEnvioTurnos frame;
 	private HiloTiempo tiempo;
@@ -51,11 +52,11 @@ public class HiloEjecucion extends Thread {
 
 		tiempo.start();
 
-		turnos = cierra.consultaTurnosNoEnviadosExt();
+		turnos = datosServiceImpl.consultaTurnosNoEnviadosExt();
 		cantTurnosProcesos = (turnos.size() + 1) * 2;
 
-		frame.getlTienda().setText("Tienda: " + cierra.getClave());
-		frame.getlCaja().setText("Caja: " + cierra.getCaja());
+		frame.getlTienda().setText("Tienda: " + datosServiceImpl.getClave());
+		frame.getlCaja().setText("Caja: " + datosServiceImpl.getCaja());
 
 		frame.getlProceso().setText("Proceso 2 Existen " + String.valueOf(turnos.size()) + " Turnos No enviados");
 		frame.getjProgressBar1().setValue(cantTurnosProcesos);
@@ -90,14 +91,14 @@ public class HiloEjecucion extends Thread {
 			}
 
 			frame.getlProceso().setText("Proceso 3 Borrando datos Turno BOT " + dto.getIdturno());
-			cierra.borraInfoTurno(dto.getIdturno());
+			datosServiceImpl.borraInfoTurno(dto.getIdturno());
 			try {
 				this.sleep(2000);
 			} catch (InterruptedException ex) {
 			}
 			frame.getjProgressBar1().setValue(frame.getjProgressBar1().getValue() + cantTurnosProcesos);
 			frame.getlProceso().setText("Proceso 3 Enviando datos Turno " + dto.getIdturno());
-			cierra.procesoCierraTurnoBOT(dto.getIdturno());
+			datosServiceImpl.procesoCierraTurnoBOT(dto.getIdturno());
 			try {
 				this.sleep(2000);
 			} catch (InterruptedException ex) {
