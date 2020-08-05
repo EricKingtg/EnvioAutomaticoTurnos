@@ -1,19 +1,24 @@
 package t3b.pv.com.org.EnvioAutomatico.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import t3b.pv.com.org.EnvioAutomatico.frame.FEnvioTurnos;
 
+@Service
 public class HiloTiempo extends Thread {
 
-	private int minutos = 0, segundos = 0, minutos_totales = 0, tiempo_espera = 10;
+	private int minutos = 0;
+	private int segundos = 0;
+	private int minutos_totales = 0;
+	private int tiempo_espera = 10;
 
-	@Autowired
-	@Qualifier("frameEnvioTurnos")
 	FEnvioTurnos frameEnvioTurnos;
 
 	public HiloTiempo() {
+	}
+
+	public void init(FEnvioTurnos frame) {
+		this.frameEnvioTurnos = frame;
 	}
 
 	public void ejecutar() {

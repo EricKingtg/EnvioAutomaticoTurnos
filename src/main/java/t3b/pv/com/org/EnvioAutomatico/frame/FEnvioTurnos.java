@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import t3b.pv.com.org.EnvioAutomatico.utils.HiloEjecucion;
@@ -17,10 +18,16 @@ import t3b.pv.com.org.EnvioAutomatico.utils.HiloTiempo;
 public class FEnvioTurnos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	HiloTiempo hiloTiempo;
+	
+	@Autowired
+	HiloEjecucion hiloEjecucion;
 
 	public FEnvioTurnos() {
+		System.setProperty("java.awt.headless", "false");
 		initComponents();
-
 	}
 
 	public void muestraMensajeTiempoExcedido() {
@@ -44,8 +51,8 @@ public class FEnvioTurnos extends JFrame {
 
 		this.getlFecha().setText("Fecha: " + date);
 
-		HiloTiempo hiloTiempo = new HiloTiempo();
-		HiloEjecucion hiloEjecucion = new HiloEjecucion(this, hiloTiempo);
+		hiloTiempo.init(this);
+		hiloEjecucion.init(this, hiloTiempo);
 		hiloEjecucion.start();
 
 	}
