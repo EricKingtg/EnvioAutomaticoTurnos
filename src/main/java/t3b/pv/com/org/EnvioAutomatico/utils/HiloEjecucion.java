@@ -39,6 +39,7 @@ public class HiloEjecucion extends Thread {
 	public void  init(FEnvioTurnos frame, HiloTiempo tiempo) {
 		this.frameEnvioTurnos = frame;
 		this.tiempo = tiempo;
+		datosServiceImpl.init();
 	}
 
 	@SuppressWarnings({ "static-access", "deprecation" })
